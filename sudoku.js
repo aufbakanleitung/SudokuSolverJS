@@ -1,16 +1,24 @@
 var cells;
 var puzzles;
 var puzzle;
+var doContinue = true;
 
 (function () {
     $.ajax({url: "sudoku.txt"})
         .done(function (fileContent) {
             parseFile(fileContent);
             initCells();
-            loadPuzzle(7);
-            start();
+            // loadPuzzle(puzzleNumber);
+            // start();
         });
 })($);
+
+function selectPuzzle() {
+    var myElement = document.getElementById("puzzleNumber");
+    var puzzleNumber = myElement.value;
+    console.log(puzzleNumber);
+    loadPuzzle(puzzleNumber);
+}
 
 function loadPuzzle(puzzleIndex)
 {
@@ -19,10 +27,18 @@ function loadPuzzle(puzzleIndex)
     {
         for (var x = 0; x < 9; x++)
         {
-            if (puzzle[y][x] === 0) continue;
-            setTableCell(x, y, puzzle[y][x]);
+            setCell(x, y, puzzle[y][x]);
         }
     }
+}
+
+function stop(){
+    clearInterval(myVar);
+}
+
+function clearPuzzle() {
+    loadPuzzle(0);
+    console.log(0);
 }
 
 function parseFile(fileContent)
@@ -59,72 +75,8 @@ function initCells()
             cells[y][x] = $(flatCells[x + y*9]);
         }
     }
+
 }
-
-function start()
-{
-    highlightCell(0,0);
-    setInterval(doStep, 100);
-}
-
-var currentX = 0;
-var currentY = 0;
-
-numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-function doStep()
-{
-    deHighlightCell(currentX, currentY);
-
-    currentX++;
-    if (currentX > 8)
-    {
-        currentX = 0;
-        currentY++;
-    }
-    if (currentY > 8)
-    {
-        currentX = 0;
-        currentY = 0;
-    }
-    highlightCell(currentX, currentY);
-
-    if (getCell(currentX, currentY) !== 0) return;
-
-    var foundNumbers = getColumn(currentX);
-    foundNumbers = foundNumbers.concat(getRow(currentY));
-    foundNumbers = foundNumbers.concat(getBlock(currentX, currentY));
-    console.log(foundNumbers)
-
-    var diff = numbers.filter(function(x) { return foundNumbers.indexOf(x) < 0 })
-
-    console.log("In "+ currentY + "" + currentX + " found: " + diff);
-
-    if (diff.length >= 1) //if there are possibilities
-    {
-        setBlueTableCell(currentX, currentY, diff[0]); //try the first option
-        setCell(currentX, currentY, diff[0]);
-    }
-    else{ //backtrack
-        console.log("No options left for" + currentY + "" + currentX + " - Backtracking")
-        setBlueTableCell(currentX-1, currentY, diff[1]);
-        setCell(currentX-1, currentY, diff[1]);
-
-    }
-}
-function stepBack(){
-    //backtrack
-}
-
-function getCell(x, y)
-{
-    return puzzle[y][x];
-}
-
-function setCell(x, y, value)
-{
-    puzzle[y][x] = value;
-}
-
 function getRow(y)
 {
     return puzzle[y];
@@ -154,16 +106,26 @@ function getBlock(x, y) {
     return block;
 }
 
-function setTableCell(x, y, value)
+function getCell(x, y)
 {
-    cells[y][x].html(value);
+    return puzzle[y][x];
 }
 
-function setBlueTableCell(x, y, value)
+function setCell(x, y, value)
 {
+    puzzle[y][x] = value;
+    if (puzzle[y][x] === 0){
+        cells[y][x].html("");
+    } else {
+        cells[y][x].html(value);
+    }
+}
+
+function setBlueCell(x, y, value)
+{
+    puzzle[y][x] = value;
     cells[y][x].html(value).css("color", "blue");
 }
-
 
 function highlightCell(x, y)
 {
