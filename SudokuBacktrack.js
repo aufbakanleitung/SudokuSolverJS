@@ -34,7 +34,7 @@ function printGrid(grid){
     for (var row = 0; row < 9; row++) {
         for (var col = 0; col < 9; col++) {
             // if (cells[y][x].css("color", "blue") == true) {
-            setCell(col,row,puzzle[y][x);
+            setCell(col,row,puzzle[y][x]);
             puzzle[y][x] = value;
             cells[y][x].html(value);
         }
@@ -100,7 +100,7 @@ function usedInBlock(x, y) {
 function stepForward()
 {
     deHighlightCell(currentX, currentY);
-    find_empty_location(grid, loc)
+    // find_empty_location(grid, loc)
 
     currentX++;
     if (currentX > 8)
@@ -128,8 +128,8 @@ function stepForward()
 
     if (diff.length >= 1) //if there are possibilities
     {
-        setBlueTableCell(currentX, currentY, diff); //try the first option
-        setCell(currentX, currentY, diff);
+        setBlueCell(currentX, currentY, diff); //try the first option
+        // setCell(currentX, currentY, diff);
         console.log(diff);
     }
     // else{ //backtrack
