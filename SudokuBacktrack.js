@@ -6,17 +6,19 @@ var loc = [];
 // var currentY = 0;
 // numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-var grid = [
-    1, 0, 3, 6, 0, 4, 7, 0, 9, // 0x0
-    0, 2, 0, 0, 9, 0, 0, 1, 0, // 0x1
-    7, 0, 0, 0, 0, 0, 0, 0, 6, // 0x2
-    2, 0, 4, 0, 3, 0, 9, 0, 8, // 1x0
-    0, 0, 0, 0, 0, 0, 0, 0, 0, // 1x1
-    5, 0, 0, 9, 0, 7, 0, 0, 1, // 1x2
-    6, 0, 0, 0, 5, 0, 0, 0, 2, // 2x0
-    0, 0, 0, 0, 7, 0, 0, 0, 0, // 2x1
-    9, 0, 0, 8, 0, 2, 0, 0, 5  // 2x2
-];
+var btPuzzle = [[[]]];
+
+// var btPuzzle = [
+//     [[1], 0, 3, 6, 0, 4, 7, 0, 9], // 0x0
+//     [0, 2, 0, 0, 9, 0, 0, 1, 0], // 0x1
+//     7, 0, 0, 0, 0, 0, 0, 0, 6, // 0x2
+//     2, 0, 4, 0, 3, 0, 9, 0, 8, // 1x0
+//     0, 0, 0, 0, 0, 0, 0, 0, 0, // 1x1
+//     5, 0, 0, 9, 0, 7, 0, 0, 1, // 1x2
+//     6, 0, 0, 0, 5, 0, 0, 0, 2, // 2x0
+//     0, 0, 0, 0, 7, 0, 0, 0, 0, // 2x1
+//     9, 0, 0, 8, 0, 2, 0, 0, 5  // 2x2
+// ];
 
 function startBacktrack(){
     myVar = setInterval(stepForward, 100);
@@ -120,17 +122,16 @@ function stepForward()
     var foundNumbers = getColumn(currentX);
     foundNumbers = foundNumbers.concat(getRow(currentY));
     foundNumbers = foundNumbers.concat(getBlock(currentX, currentY));
-    console.log(foundNumbers)
+    // console.log(foundNumbers)
 
     var diff = numbers.filter(function(x) { return foundNumbers.indexOf(x) < 0 })
 
-    console.log("In "+ currentY + "" + currentX + " found: " + diff);
+    // console.log("In "+ currentY + "" + currentX + " found: " + diff);
 
     if (diff.length >= 1) //if there are possibilities
     {
-        setBlueCell(currentX, currentY, diff); //try the first option
-        // setCell(currentX, currentY, diff);
-        console.log(diff);
+        setBacktrackCell(currentX, currentY, diff); //try the first option
+        // console.log(diff);
     }
     // else{ //backtrack
     //     console.log("No options left for" + currentY + "" + currentX + " - Backtracking")
@@ -149,3 +150,11 @@ function stepBack(){
     }
     highlightCell(currentX, currentY);
 }
+
+function setBacktrackCell(x, y, value)
+{
+    puzzle[y][x] = [value];
+    console.log(puzzle);
+    cells[y][x].html(value).css("color", "blue");
+}
+

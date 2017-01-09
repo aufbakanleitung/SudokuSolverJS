@@ -23,6 +23,7 @@ function selectPuzzle() {
 function loadPuzzle(puzzleIndex)
 {
     puzzle = puzzles[puzzleIndex];
+    console.log(puzzle);
     for (var y = 0; y < 9; y++)
     {
         for (var x = 0; x < 9; x++)

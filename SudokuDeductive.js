@@ -6,7 +6,7 @@ var myVar;
 function startDeductive()
 {
     // highlightCell(0,0);
-    myVar = setInterval(doStep, 100);
+    myVar = setInterval(doStep, 50);
 }
 
 
