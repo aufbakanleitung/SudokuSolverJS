@@ -74,28 +74,29 @@ function stepForward()
         deHighlightCell(emptyLocGrid[ce][1],emptyLocGrid[ce][0]);
     }
     ce++;
-    var cy = emptyLocGrid[ce][1];
-    var cx = emptyLocGrid[ce][0];
-    highlightCell(cy,cx);
+    var cx = emptyLocGrid[ce][1];
+    var cy = emptyLocGrid[ce][0];
+    highlightCell(cx,cy);
 
     var foundNumbers = getColumn(cx);
     foundNumbers = foundNumbers.concat(getRow(cy));
     foundNumbers = foundNumbers.concat(getBlock(cx, cy));
-    // console.log(foundNumbers)
+    console.log(foundNumbers);
 
     var diff = numbers.filter(function(x) { return foundNumbers.indexOf(x) < 0 })
+    console.log(diff);
 
-
-    console.log("In x:"+ cy + ", y:" + cx + " found: " + diff);
+    console.log("In x:"+ cx + ", y:" + cy + " found: " + diff);
 
     if (diff.length >= 1) //if there are possibilities
     {
-        setBacktrackCell(cy, cx, diff); //try the first option
+        setBacktrackCell(cx, cy, diff); //try the first option
         // console.log(diff);
     }
     else{ //backtrack
-        cells[cy][cx].addClass('selectedRed');
-        console.log("No options left for" + cy + ", " + cx + " - Backtracking")
+        redlightCell(cx, cy);
+        // cells[cy][cx].addClass('selectedRed');
+        console.log("No options left for" + cx + ", " + cy + " - Backtracking")
         stepBack(cx, cy)
         // setBlueTableCell(cx, cy, diff[0]);
         // setCell(cx-1, cy, diff[1]);

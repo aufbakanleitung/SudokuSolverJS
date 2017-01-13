@@ -99,6 +99,7 @@ function initCells()
 }
 function getRow(y)
 {
+    // console.log("row y: " + y + " = " + puzzle[y]);
     return puzzle[y];
 }
 
@@ -145,6 +146,11 @@ function setBlueCell(x, y, value)
 {
     puzzle[y][x] = value;
     cells[y][x].html(value).css("color", "blue");
+}
+
+function redlightCell(x, y)
+{
+    cells[y][x].addClass('selectedRed');
 }
 
 function highlightCell(x, y)
