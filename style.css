@@ -32,6 +32,10 @@ td {
     background-color: #cfffc9;
 }
 
+.selectedRed {
+    background-color: crimson;
+}
+
 table.sudoku {
     table-layout:fixed;
     border-spacing: 0px;

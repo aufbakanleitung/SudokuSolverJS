@@ -9,11 +9,6 @@ function startDeductive()
     myVar = setInterval(doStep, 50);
 }
 
-
-
-var currentX = 0;
-var currentY = 0;
-
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 function doStep()
 {

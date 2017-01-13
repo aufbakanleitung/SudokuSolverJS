@@ -1,7 +1,8 @@
 var cells;
 var puzzles;
 var puzzle;
-var doContinue = true;
+var currentX = 0;
+var currentY = 0;
 
 (function () {
     $.ajax({url: "sudoku.txt"})
@@ -31,6 +32,24 @@ function loadPuzzle(puzzleIndex)
             setCell(x, y, puzzle[y][x]);
         }
     }
+    find_empty_location();
+    console.log(emptyLocGrid);
+
+}
+
+function find_empty_location(){
+
+    var i=0;
+    for (var row = 0; row < 9; row++) {
+        for (var col = 0; col < 9; col++) {
+            if (puzzle[row][col] == 0) {
+                emptyLocGrid[i] = [row,col,0];
+                i++;
+                // emptyLocGrid.push({Column: col, Row: row})
+            }
+        }
+    }
+    return emptyLocGrid;
 }
 
 function stop(){

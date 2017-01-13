@@ -1,27 +1,11 @@
 /**
 * Created by Herman van der Veer on 7-1-2017.
 */
-var loc = [];
-// var currentX = 0;
-// var currentY = 0;
-// numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-var btPuzzle = [[[]]];
-
-// var btPuzzle = [
-//     [[1], 0, 3, 6, 0, 4, 7, 0, 9], // 0x0
-//     [0, 2, 0, 0, 9, 0, 0, 1, 0], // 0x1
-//     7, 0, 0, 0, 0, 0, 0, 0, 6, // 0x2
-//     2, 0, 4, 0, 3, 0, 9, 0, 8, // 1x0
-//     0, 0, 0, 0, 0, 0, 0, 0, 0, // 1x1
-//     5, 0, 0, 9, 0, 7, 0, 0, 1, // 1x2
-//     6, 0, 0, 0, 5, 0, 0, 0, 2, // 2x0
-//     0, 0, 0, 0, 7, 0, 0, 0, 0, // 2x1
-//     9, 0, 0, 8, 0, 2, 0, 0, 5  // 2x2
-// ];
+var emptyLocGrid = []; //array of all empty locations in grid
+var ce = -1; //counter of position
 
 function startBacktrack(){
-    myVar = setInterval(stepForward, 100);
+    myVar = setInterval(stepForward, 300);
 }
 
 function countInGrid(){
@@ -30,7 +14,6 @@ function countInGrid(){
         setCell(loc[0], loc[1], i)
     }
 }
-
 
 function printGrid(grid){
     for (var row = 0; row < 9; row++) {
@@ -41,20 +24,6 @@ function printGrid(grid){
             cells[y][x].html(value);
         }
     }
-}
-
-
-function find_empty_location(){
-    for (var row = 0; row < 9; row++) {
-        for (var col = 0; col < 9; col++) {
-            if (puzzle[row][col] == 0) {
-                loc[0] = row
-                loc[1] = col
-                return loc;
-            }
-        }
-    }
-    return false;
 }
 
 function usedInRow(grid, row, num) {
@@ -101,60 +70,47 @@ function usedInBlock(x, y) {
 
 function stepForward()
 {
-    deHighlightCell(currentX, currentY);
-    // find_empty_location(grid, loc)
-
-    currentX++;
-    if (currentX > 8)
-    {
-        currentX = 0;
-        currentY++;
+    if(ce>=0){
+        deHighlightCell(emptyLocGrid[ce][1],emptyLocGrid[ce][0]);
     }
-    if (currentY > 8)
-    {
-        currentX = 0;
-        currentY = 0;
-    }
-    highlightCell(currentX, currentY);
+    ce++;
+    var cy = emptyLocGrid[ce][1];
+    var cx = emptyLocGrid[ce][0];
+    highlightCell(cy,cx);
 
-    if (getCell(currentX, currentY) !== 0) return;
-
-    var foundNumbers = getColumn(currentX);
-    foundNumbers = foundNumbers.concat(getRow(currentY));
-    foundNumbers = foundNumbers.concat(getBlock(currentX, currentY));
+    var foundNumbers = getColumn(cx);
+    foundNumbers = foundNumbers.concat(getRow(cy));
+    foundNumbers = foundNumbers.concat(getBlock(cx, cy));
     // console.log(foundNumbers)
 
     var diff = numbers.filter(function(x) { return foundNumbers.indexOf(x) < 0 })
 
-    // console.log("In "+ currentY + "" + currentX + " found: " + diff);
+
+    console.log("In x:"+ cy + ", y:" + cx + " found: " + diff);
 
     if (diff.length >= 1) //if there are possibilities
     {
-        setBacktrackCell(currentX, currentY, diff); //try the first option
+        setBacktrackCell(cy, cx, diff); //try the first option
         // console.log(diff);
     }
-    // else{ //backtrack
-    //     console.log("No options left for" + currentY + "" + currentX + " - Backtracking")
-    //     stepBack(currentX, currentY)
-    //     setBlueTableCell(currentX, currentY, diff[1]);
-    //     setCell(currentX-1, currentY, diff[1]);
-    // }
+    else{ //backtrack
+        cells[cy][cx].addClass('selectedRed');
+        console.log("No options left for" + cy + ", " + cx + " - Backtracking")
+        stepBack(cx, cy)
+        // setBlueTableCell(cx, cy, diff[0]);
+        // setCell(cx-1, cy, diff[1]);
+    }
 }
 function stepBack(){
-    deHighlightCell(currentX, currentY);
-    currentX--;
-    if (currentX < 0)
-    {
-        currentX = 8;
-        currentY--;
-    }
+    deHighlightCell(cx, cy);
+    ce--;
     highlightCell(currentX, currentY);
 }
 
 function setBacktrackCell(x, y, value)
 {
-    puzzle[y][x] = [value];
-    console.log(puzzle);
+    puzzle[y][x] = value;
+    // console.log(puzzle);
     cells[y][x].html(value).css("color", "blue");
 }
 
