@@ -1,16 +1,13 @@
 var cells;
 var puzzles;
 var puzzle;
-var currentX = 0;
-var currentY = 0;
+
 
 (function () {
     $.ajax({url: "sudoku.txt"})
         .done(function (fileContent) {
             parseFile(fileContent);
             initCells();
-            // loadPuzzle(puzzleNumber);
-            // start();
         });
 })($);
 
@@ -53,7 +50,7 @@ function find_empty_location(){
 }
 
 function stop(){
-    clearInterval(myVar);
+    clearInterval(intervar);
 }
 
 function clearPuzzle() {

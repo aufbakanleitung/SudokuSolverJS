@@ -1,12 +1,14 @@
 /**
  * Created by Tommy de Boer.
  */
-var myVar;
+var intervar;
+var currentX = 0;
+var currentY = 0;
 
 function startDeductive()
 {
     // highlightCell(0,0);
-    myVar = setInterval(doStep, 50);
+    intervar = setInterval(doStep, 50);
 }
 
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
