@@ -3,6 +3,7 @@
 */
 
 function startBacktrack(){
+    ce = -1;
     intervar = setInterval(stepForward, 5);
 }
 
@@ -15,7 +16,10 @@ function stepForward() //stepfunction
     }
     ce++;
     console.log(emptyLocGrid.length + " = " + ce);
-    if(emptyLocGrid.length == ce){stop()}
+    if(emptyLocGrid.length == ce) {
+        stop();
+        addSolutionToList();
+    }
 
     var cx = emptyLocGrid[ce][1];
     var cy = emptyLocGrid[ce][0];

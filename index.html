@@ -21,9 +21,8 @@
 <body>
     <div class="container">
         <h1>Sudoku solve visualizer</h1>
-        <br>
+        <table><tr><th>This is puzzle</th><th id="number">#</th><th id="solution"></th></tr></table>
         <table class="sudoku">
-        <h3>This is puzzle <script>myElement.value</script></h3>
             <col class="bl"/>
             <col />
             <col />
@@ -119,7 +118,8 @@
         <button onclick="clearPuzzle()">Clear</button>
         <br><br>
         <button onclick="startDeductive()">Solve with deductive method</button>
-        <button onclick="startBacktrack()">Solve with backtracking</button>
+        <button onclick="startBacktrack()">Solve with backtracking</button><br>
+        <button onclick="startBacktrack()">Solve all puzzles with backtracking</button>
         </div>
     </div>
 

@@ -14,6 +14,7 @@ var puzzle;
 function selectPuzzle() {
     var myElement = document.getElementById("puzzleNumber");
     var puzzleNumber = myElement.value;
+    $("#number").html(puzzleNumber);
     console.log(puzzleNumber);
     loadPuzzle(puzzleNumber);
 }
@@ -135,7 +136,7 @@ function setCell(x, y, value)
     if (puzzle[y][x] === 0){
         cells[y][x].html("");
     } else {
-        cells[y][x].html(value);
+        cells[y][x].html(value).css("color", "black");
     }
 }
 
@@ -158,4 +159,19 @@ function highlightCell(x, y)
 function deHighlightCell(x, y)
 {
     cells[y][x].removeClass('selected');
+}
+
+var solutionList = [];
+var solutionSum = 0;
+function addSolutionToList() {
+    var a = getCell(0,0).toString();
+    var b = getCell(1,0).toString();
+    var c = getCell(2,0).toString();
+    var d = a + b + c;
+    $("#solution").html(d);
+    solutionList.push(parseInt(d));
+    console.log("Solutions: " + solutionList);
+
+    solutionSum += parseInt(d);
+    console.log("Sum: " + solutionSum);
 }
