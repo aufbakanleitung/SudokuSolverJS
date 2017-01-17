@@ -7,6 +7,27 @@ function startBacktrack(){
     intervar = setInterval(stepForward, 5);
 }
 
+function backtrackFast(){
+    ce = -1;
+    while(emptyLocGrid.length > ce){
+        stepForward();
+    }
+}
+
+function backtrackAll(){
+    var a=31;
+    while(a <= 50){
+        $("#number").html(a);
+        console.log(a);
+        loadPuzzle(a);
+        ce = -1;
+        while(emptyLocGrid.length > ce){
+            stepForward();
+        }
+        a++;
+    }
+}
+
 var emptyLocGrid = []; //array of all empty locations in grid
 var ce = -1; //counter of empty grid position
 function stepForward() //stepfunction
@@ -19,6 +40,7 @@ function stepForward() //stepfunction
     if(emptyLocGrid.length == ce) {
         stop();
         addSolutionToList();
+        return;
     }
 
     var cx = emptyLocGrid[ce][1];

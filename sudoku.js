@@ -21,6 +21,7 @@ function selectPuzzle() {
 
 function loadPuzzle(puzzleIndex)
 {
+    clean();
     puzzle = puzzles[puzzleIndex];
     console.log(puzzle);
     for (var y = 0; y < 9; y++)
@@ -52,6 +53,11 @@ function find_empty_location(){
 
 function stop(){
     clearInterval(intervar);
+}
+
+function clean(){
+    ce = -1;
+    emptyLocGrid = [];
 }
 
 function clearPuzzle() {
