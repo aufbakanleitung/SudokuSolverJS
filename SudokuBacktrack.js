@@ -4,7 +4,7 @@
 
 function startBacktrack(){
     ce = -1;
-    intervar = setInterval(stepForward, 5);
+    intervar = setInterval(stepForward, 100);
 }
 
 function backtrackFast(){
@@ -30,6 +30,21 @@ function backtrackAll(){
 
 var emptyLocGrid = []; //array of all empty locations in grid
 var ce = -1; //counter of empty grid position
+
+function backtrack(cx, cy, ct) {
+    setBacktrackCell(cx, cy, 0);
+    console.log("Backtracking for x:" + cx + ", y:" + cy + ", t:" + ct);
+    emptyLocGrid[ce][2] = 0; //reset the ct counter
+    //One step back
+    ce--;
+    cx = emptyLocGrid[ce][1];
+    cy = emptyLocGrid[ce][0];
+    setBacktrackCell(cx, cy, 0);
+    emptyLocGrid[ce][2]++;
+    ce--; //One extra step back to negate te stepforward immediately after.v
+    return {cx: cx, cy: cy};
+}
+
 function stepForward() //stepfunction
 {
     if(ce>=0){
@@ -62,16 +77,7 @@ function stepForward() //stepfunction
 
     }
     else{ //backtrack
-        setBacktrackCell(cx, cy, 0);
-        console.log("Backtracking for x:" + cx + ", y:" + cy + ", t:" + ct);
-        emptyLocGrid[ce][2] = 0; //reset the ct counter
-        //One step back
-        ce--;
-        cx = emptyLocGrid[ce][1];
-        cy = emptyLocGrid[ce][0];
-        setBacktrackCell(cx, cy, 0);
-        emptyLocGrid[ce][2]++;
-        ce--; //One extra step back to negate te stepforward immediately after.v
+        backtrack(cx, cy, ct);
     }
 }
 
